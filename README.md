@@ -14,11 +14,14 @@ Everything runs in the browser — no backend, no login, no data leaves the page
 |---|---|
 | Contacts | Contacts, Contact Tags, Bank Accounts, Banks, Industries |
 | Sales | Products, Product Categories, Product Tags, Pricelists, Pricelist Rules, Sales Orders (incl. order lines) |
+| Projects | Projects, Tasks, Task Stages, Project Tags, Milestones |
 
 Field catalogs were extracted from a live Odoo 19 instance and version-checked
 against the official [odoo/odoo](https://github.com/odoo/odoo) 18.0/19.0 source.
 Version-specific fields (e.g. `mobile` on contacts, `order_line/tax_id` vs
-`tax_ids`) switch automatically with the Odoo version toggle.
+`tax_ids`, task priority levels) switch automatically with the Odoo version
+toggle. Fields contributed by optional apps (Timesheets, Sales, Inventory,
+Enterprise scheduling) are included and flagged with the app they require.
 
 ## Development
 
