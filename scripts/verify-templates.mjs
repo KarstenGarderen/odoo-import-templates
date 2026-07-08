@@ -1,0 +1,97 @@
+// Builds every template combination (model × Odoo version) outside the browser
+// and asserts the generated .xlsx files are correct. Run with: npm run verify
+import { tmpdir } from 'node:os'
+import { mkdtempSync } from 'node:fs'
+import { join } from 'node:path'
+import { buildTemplateWorkbook } from '../src/excel/buildTemplate.js'
+import { MODULES, ODOO_VERSIONS, fieldsForVersion } from '../src/data/registry.js'
+import ExcelJS from 'exceljs'
+
+const outDir = mkdtempSync(join(tmpdir(), 'odoo-templates-'))
+let failures = 0
+const check = (cond, msg) => {
+  if (!cond) failures++
+  console.log(`  ${cond ? '✓' : '✗'} ${msg}`)
+}
+
+for (const mod of MODULES) {
+  for (const model of mod.models) {
+    for (const version of ODOO_VERSIONS) {
+      const fields = fieldsForVersion(model, version)
+      const wb = await buildTemplateWorkbook({ model, fields, version })
+      const file = join(outDir, `odoo${version}_${model.slug}.xlsx`)
+      await wb.xlsx.writeFile(file)
+
+      const rb = new ExcelJS.Workbook()
+      await rb.xlsx.readFile(file)
+      const ws = rb.getWorksheet('Import Template')
+      const info = rb.getWorksheet('Instructions')
+      console.log(`\n${model.id} — Odoo ${version} (${fields.length} fields)`)
+
+      const headers = []
+      ws.getRow(1).eachCell((c) => headers.push(c.value))
+      check(
+        headers.length === fields.length && headers.every((h, i) => h === fields[i].name),
+        `headers match field names (${headers.length})`
+      )
+      check(headers[0] === 'id', 'external ID column is first')
+      check(
+        String(ws.getRow(2).getCell(1).value || '').startsWith('import_'),
+        'external ID example present'
+      )
+      const probeIdx = headers.indexOf('name') >= 0 ? headers.indexOf('name') : 1
+      const exampleName = ws.getRow(2).getCell(probeIdx + 1).value
+      check(exampleName && String(exampleName).length > 0, `example row present ("${exampleName}")`)
+      check(ws.getRow(1).getCell(1).note != null, 'header cell 1 has a comment')
+      const reqIdx = fields.findIndex((f) => f.required)
+      if (reqIdx >= 0) {
+        check(
+          ws.getRow(1).getCell(reqIdx + 1).fill?.fgColor?.argb === 'FF714B67',
+          `required header (${fields[reqIdx].name}) is Odoo purple`
+        )
+      }
+      const boolIdx = fields.findIndex((f) => f.type === 'boolean')
+      if (boolIdx >= 0) {
+        const col = ws.getColumn(boolIdx + 1).letter
+        const dv = ws.getCell(`${col}3`).dataValidation
+        check(
+          dv?.type === 'list' && dv.formulae?.[0]?.includes('TRUE'),
+          `boolean dropdown on ${fields[boolIdx].name}`
+        )
+      }
+      check(info != null, 'Instructions sheet present')
+      check(ws.views?.[0]?.ySplit === 1, 'header row frozen')
+
+      // Version-specific spot checks for known 18-only fields
+      if (model.id === 'res.partner') {
+        check(headers.includes('mobile') === (version === '18'), `mobile only in v18 (v${version})`)
+        check(!headers.includes('team_id'), 'team_id absent (removed in Odoo 18)')
+      }
+      if (model.id === 'product.template') {
+        check(headers.includes('uom_po_id') === (version === '18'), `uom_po_id only in v18 (v${version})`)
+      }
+      if (model.id === 'sale.order') {
+        check(
+          headers.includes('order_line/tax_ids') === (version === '19') &&
+            headers.includes('order_line/tax_id') === (version === '18'),
+          `order line taxes column matches version (v${version})`
+        )
+        check(
+          headers.includes('order_line/product_uom_id') === (version === '19') &&
+            headers.includes('order_line/product_uom') === (version === '18'),
+          `order line unit column matches version (v${version})`
+        )
+      }
+      if (model.id === 'res.partner.bank') {
+        check(
+          headers.includes('clearing_number') === (version === '19'),
+          `clearing_number only in v19 (v${version})`
+        )
+        check(headers.includes('note') === (version === '19'), `note only in v19 (v${version})`)
+      }
+    }
+  }
+}
+
+console.log(failures === 0 ? `\nALL CHECKS PASSED (files in ${outDir})` : `\n${failures} CHECKS FAILED`)
+process.exit(failures === 0 ? 0 : 1)

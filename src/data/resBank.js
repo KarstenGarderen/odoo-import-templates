@@ -1,0 +1,83 @@
+// Field catalog for res.bank (Banks). Extracted from a live Odoo 19 instance;
+// model is identical in Odoo 18. Import banks before bank accounts that reference them.
+
+export default {
+  id: 'res.bank',
+  slug: 'banks',
+  name: 'Banks',
+  icon: 'bank',
+  description: 'The banks themselves (name, BIC). Import before bank accounts that reference them.',
+  orderHint: 'Import before Bank Accounts',
+  groups: ['Basic information', 'Address & contact'],
+  fields: [
+    {
+      name: 'name',
+      label: 'Bank Name',
+      type: 'char',
+      required: true,
+      group: 'Basic information',
+      example: 'ABN AMRO Bank',
+      defaultChecked: true,
+    },
+    {
+      name: 'bic',
+      label: 'BIC / SWIFT',
+      type: 'char',
+      group: 'Basic information',
+      help: 'Bank Identifier Code, sometimes called BIC or SWIFT.',
+      example: 'ABNANL2A',
+      defaultChecked: true,
+    },
+    {
+      name: 'active',
+      label: 'Active',
+      type: 'boolean',
+      group: 'Basic information',
+      example: 'TRUE',
+    },
+    {
+      name: 'street',
+      label: 'Street',
+      type: 'char',
+      group: 'Address & contact',
+      example: 'Gustav Mahlerlaan 10',
+    },
+    {
+      name: 'city',
+      label: 'City',
+      type: 'char',
+      group: 'Address & contact',
+      example: 'Amsterdam',
+    },
+    {
+      name: 'zip',
+      label: 'Zip',
+      type: 'char',
+      group: 'Address & contact',
+      example: '1082 PP',
+    },
+    {
+      name: 'country',
+      label: 'Country',
+      type: 'many2one',
+      relation: 'res.country',
+      group: 'Address & contact',
+      example: 'Netherlands',
+      importNote: 'Country name in English, exactly as in Odoo. Note: the column is "country", not "country_id".',
+    },
+    {
+      name: 'phone',
+      label: 'Phone',
+      type: 'char',
+      group: 'Address & contact',
+      example: '+31 20 628 9393',
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'char',
+      group: 'Address & contact',
+      example: 'info@abnamro.nl',
+    },
+  ],
+}
