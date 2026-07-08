@@ -10,6 +10,11 @@ import productTag from './productTag.js'
 import productPricelist from './productPricelist.js'
 import productPricelistItem from './productPricelistItem.js'
 import saleOrder from './saleOrder.js'
+import projectProject from './projectProject.js'
+import projectTask from './projectTask.js'
+import projectTaskType from './projectTaskType.js'
+import projectTags from './projectTags.js'
+import projectMilestone from './projectMilestone.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -28,6 +33,13 @@ export const MODULES = [
     icon: 'cart',
     description: 'Everything you sell: products, categories, pricelists and sales orders.',
     models: [productTemplate, productCategory, productTag, productPricelist, productPricelistItem, saleOrder],
+  },
+  {
+    id: 'projects',
+    name: 'Projects',
+    icon: 'briefcase',
+    description: 'Project management: projects, tasks, stages, tags and milestones.',
+    models: [projectProject, projectTask, projectTaskType, projectTags, projectMilestone],
   },
 ]
 

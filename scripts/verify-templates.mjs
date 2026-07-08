@@ -82,6 +82,24 @@ for (const mod of MODULES) {
           `order line unit column matches version (v${version})`
         )
       }
+      if (model.id === 'project.project') {
+        check(
+          headers.includes('allow_recurring_tasks') === (version === '19'),
+          `allow_recurring_tasks only in v19 (v${version})`
+        )
+        check(
+          headers.filter((h) => h === 'privacy_visibility').length === 1,
+          'exactly one privacy_visibility column'
+        )
+      }
+      if (model.id === 'project.task') {
+        const priorityField = fields.find((f) => f.name === 'priority')
+        check(
+          priorityField.options.length === (version === '19' ? 4 : 2),
+          `priority has ${version === '19' ? 4 : 2} levels (v${version})`
+        )
+        check(headers.filter((h) => h === 'priority').length === 1, 'exactly one priority column')
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),
