@@ -15,6 +15,7 @@ Everything runs in the browser — no backend, no login, no data leaves the page
 | Contacts | Contacts, Contact Tags, Bank Accounts, Banks, Industries |
 | Sales | Products, Product Categories, Product Tags, Pricelists, Pricelist Rules, Sales Orders (incl. order lines) |
 | Projects | Projects, Tasks, Task Stages, Project Tags, Milestones |
+| CRM | Leads / Opportunities, Sales Teams, Pipeline Stages, CRM Tags |
 
 Field catalogs were extracted from a live Odoo 19 instance and version-checked
 against the official [odoo/odoo](https://github.com/odoo/odoo) 18.0/19.0 source.
