@@ -1,0 +1,67 @@
+// Field catalog for crm.stage (Pipeline Stages). Extracted from a live Odoo 19
+// instance; the kept fields are identical in Odoo 18.
+
+export default {
+  id: 'crm.stage',
+  slug: 'pipeline-stages',
+  name: 'Pipeline Stages',
+  icon: 'layers',
+  description: 'The columns opportunities move through (New, Qualified, Won…).',
+  orderHint: 'Import before Leads / Opportunities',
+  groups: ['Basic information'],
+  fields: [
+    {
+      name: 'name',
+      label: 'Stage Name',
+      type: 'char',
+      required: true,
+      group: 'Basic information',
+      example: 'Qualified',
+      defaultChecked: true,
+    },
+    {
+      name: 'sequence',
+      label: 'Sequence',
+      type: 'integer',
+      group: 'Basic information',
+      help: 'Order of the columns in the pipeline (lower is more to the left).',
+      example: 10,
+      defaultChecked: true,
+    },
+    {
+      name: 'is_won',
+      label: 'Is Won Stage',
+      type: 'boolean',
+      group: 'Basic information',
+      help: 'Opportunities reaching this stage count as won (100% probability).',
+      example: 'FALSE',
+      defaultChecked: true,
+    },
+    {
+      name: 'team_ids',
+      label: 'Sales Teams',
+      type: 'many2many',
+      relation: 'crm.team',
+      group: 'Basic information',
+      help: 'Teams this stage belongs to. Empty = shared across all teams.',
+      example: 'Europe,North America',
+      importNote: 'Comma-separated sales team names, without spaces. Import teams first.',
+    },
+    {
+      name: 'fold',
+      label: 'Folded in Pipeline',
+      type: 'boolean',
+      group: 'Basic information',
+      help: 'Folded stages are collapsed on the kanban board (e.g. Won, Lost).',
+      example: 'FALSE',
+    },
+    {
+      name: 'requirements',
+      label: 'Requirements',
+      type: 'text',
+      group: 'Basic information',
+      help: 'Internal notes shown as a tooltip over the stage name.',
+      example: 'Offer sent to customer.',
+    },
+  ],
+}

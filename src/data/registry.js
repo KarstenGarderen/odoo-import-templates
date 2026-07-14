@@ -15,6 +15,10 @@ import projectTask from './projectTask.js'
 import projectTaskType from './projectTaskType.js'
 import projectTags from './projectTags.js'
 import projectMilestone from './projectMilestone.js'
+import crmLead from './crmLead.js'
+import crmTeam from './crmTeam.js'
+import crmStage from './crmStage.js'
+import crmTag from './crmTag.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -40,6 +44,13 @@ export const MODULES = [
     icon: 'briefcase',
     description: 'Project management: projects, tasks, stages, tags and milestones.',
     models: [projectProject, projectTask, projectTaskType, projectTags, projectMilestone],
+  },
+  {
+    id: 'crm',
+    name: 'CRM',
+    icon: 'target',
+    description: 'Sales pipeline: leads, opportunities, teams, stages and tags.',
+    models: [crmLead, crmTeam, crmStage, crmTag],
   },
 ]
 
