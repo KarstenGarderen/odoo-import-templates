@@ -130,6 +130,13 @@ const PATHS = {
       <path d="M5.5 4.5c4-2 7 2 11.5.5v8c-4.5 1.5-7.5-2.5-11.5-.5" />
     </>
   ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.6" />
+    </>
+  ),
   logo: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="3" />

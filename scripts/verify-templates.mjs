@@ -100,6 +100,11 @@ for (const mod of MODULES) {
         )
         check(headers.filter((h) => h === 'priority').length === 1, 'exactly one priority column')
       }
+      if (model.id === 'crm.lead') {
+        check(headers.includes('mobile') === (version === '18'), `lead mobile only in v18 (v${version})`)
+        check(headers.includes('title') === (version === '18'), `lead title only in v18 (v${version})`)
+        check(headers.includes('email_from'), 'lead email column is email_from')
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),
