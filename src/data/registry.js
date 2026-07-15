@@ -19,6 +19,8 @@ import crmLead from './crmLead.js'
 import crmTeam from './crmTeam.js'
 import crmStage from './crmStage.js'
 import crmTag from './crmTag.js'
+import purchaseOrder from './purchaseOrder.js'
+import productSupplierinfo from './productSupplierinfo.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -51,6 +53,13 @@ export const MODULES = [
     icon: 'target',
     description: 'Sales pipeline: leads, opportunities, teams, stages and tags.',
     models: [crmLead, crmTeam, crmStage, crmTag],
+  },
+  {
+    id: 'purchase',
+    name: 'Purchase',
+    icon: 'inbox',
+    description: 'Buying from vendors: purchase orders and vendor pricelists.',
+    models: [purchaseOrder, productSupplierinfo],
   },
 ]
 

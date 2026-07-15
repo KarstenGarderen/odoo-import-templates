@@ -105,6 +105,25 @@ for (const mod of MODULES) {
         check(headers.includes('title') === (version === '18'), `lead title only in v18 (v${version})`)
         check(headers.includes('email_from'), 'lead email column is email_from')
       }
+      if (model.id === 'purchase.order') {
+        check(
+          headers.includes('order_line/tax_ids') === (version === '19') &&
+            headers.includes('order_line/taxes_id') === (version === '18'),
+          `PO line taxes column matches version (v${version})`
+        )
+        check(
+          headers.includes('order_line/product_uom_id') === (version === '19') &&
+            headers.includes('order_line/product_uom') === (version === '18'),
+          `PO line unit column matches version (v${version})`
+        )
+      }
+      if (model.id === 'product.supplierinfo') {
+        check(
+          headers.includes('product_uom_id') === (version === '19') &&
+            headers.includes('product_uom') === (version === '18'),
+          `supplierinfo unit column matches version (v${version})`
+        )
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),
