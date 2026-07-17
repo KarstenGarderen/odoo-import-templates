@@ -124,6 +124,15 @@ for (const mod of MODULES) {
           `supplierinfo unit column matches version (v${version})`
         )
       }
+      if (model.id === 'stock.location') {
+        for (const f of ['posx', 'posy', 'posz', 'scrap_location']) {
+          check(headers.includes(f) === (version === '18'), `location ${f} only in v18 (v${version})`)
+        }
+      }
+      if (model.id === 'stock.quant') {
+        check(headers.includes('inventory_quantity'), 'quant uses writable inventory_quantity')
+        check(!headers.includes('quantity'), 'quant excludes read-only quantity')
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),
