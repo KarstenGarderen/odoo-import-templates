@@ -143,6 +143,31 @@ const PATHS = {
       <path d="M3.5 13.5H9a1 1 0 0 1 1 1 2 2 0 0 0 4 0 1 1 0 0 1 1-1h5.5" />
     </>
   ),
+  warehouse: (
+    <>
+      <path d="M3.5 20.5V9l8.5-4.5L20.5 9v11.5" />
+      <path d="M7.5 20.5v-6h9v6" />
+      <path d="M7.5 17.5h9" />
+    </>
+  ),
+  pin: (
+    <>
+      <path d="M12 21s6-5.3 6-10a6 6 0 1 0-12 0c0 4.7 6 10 6 10z" />
+      <circle cx="12" cy="11" r="2.2" />
+    </>
+  ),
+  barcode: (
+    <>
+      <path d="M4 6.5v11M7 6.5v11M10 6.5v11M13.5 6.5v11M17 6.5v11M20 6.5v11" />
+    </>
+  ),
+  boxes: (
+    <>
+      <rect x="3.5" y="12.5" width="7" height="7" rx="0.8" />
+      <rect x="13.5" y="12.5" width="7" height="7" rx="0.8" />
+      <rect x="8.5" y="4.5" width="7" height="7" rx="0.8" />
+    </>
+  ),
   logo: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="3" />

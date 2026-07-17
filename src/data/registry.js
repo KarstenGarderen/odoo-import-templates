@@ -21,6 +21,10 @@ import crmStage from './crmStage.js'
 import crmTag from './crmTag.js'
 import purchaseOrder from './purchaseOrder.js'
 import productSupplierinfo from './productSupplierinfo.js'
+import stockWarehouse from './stockWarehouse.js'
+import stockLocation from './stockLocation.js'
+import stockLot from './stockLot.js'
+import stockQuant from './stockQuant.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -60,6 +64,13 @@ export const MODULES = [
     icon: 'inbox',
     description: 'Buying from vendors: purchase orders and vendor pricelists.',
     models: [purchaseOrder, productSupplierinfo],
+  },
+  {
+    id: 'inventory',
+    name: 'Inventory',
+    icon: 'boxes',
+    description: 'Stock: warehouses, locations, lots/serials and opening stock levels.',
+    models: [stockWarehouse, stockLocation, stockLot, stockQuant],
   },
 ]
 
