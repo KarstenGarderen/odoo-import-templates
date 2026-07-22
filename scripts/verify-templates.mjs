@@ -133,6 +133,14 @@ for (const mod of MODULES) {
         check(headers.includes('inventory_quantity'), 'quant uses writable inventory_quantity')
         check(!headers.includes('quantity'), 'quant excludes read-only quantity')
       }
+      if (model.id === 'mrp.bom') {
+        check(headers.includes('batch_size') === (version === '19'), `bom batch_size only in v19 (v${version})`)
+        check(headers.some((h) => h.startsWith('bom_line_ids/')), 'bom has component line columns')
+      }
+      if (model.id === 'mrp.production') {
+        check(!headers.includes('state'), 'MO excludes read-only state')
+        check(!headers.includes('name'), 'MO excludes auto-numbered name')
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),
