@@ -25,6 +25,9 @@ import stockWarehouse from './stockWarehouse.js'
 import stockLocation from './stockLocation.js'
 import stockLot from './stockLot.js'
 import stockQuant from './stockQuant.js'
+import mrpBom from './mrpBom.js'
+import mrpWorkcenter from './mrpWorkcenter.js'
+import mrpProduction from './mrpProduction.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -71,6 +74,13 @@ export const MODULES = [
     icon: 'boxes',
     description: 'Stock: warehouses, locations, lots/serials and opening stock levels.',
     models: [stockWarehouse, stockLocation, stockLot, stockQuant],
+  },
+  {
+    id: 'manufacturing',
+    name: 'Manufacturing',
+    icon: 'factory',
+    description: 'Production: bills of materials, work centers and manufacturing orders.',
+    models: [mrpBom, mrpWorkcenter, mrpProduction],
   },
 ]
 

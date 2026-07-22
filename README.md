@@ -18,6 +18,7 @@ Everything runs in the browser — no backend, no login, no data leaves the page
 | CRM | Leads / Opportunities, Sales Teams, Pipeline Stages, CRM Tags |
 | Purchase | Purchase Orders (incl. order lines), Vendor Pricelists |
 | Inventory | Warehouses, Locations, Lots / Serial Numbers, On-Hand Stock |
+| Manufacturing | Bills of Materials (incl. components), Work Centers, Manufacturing Orders |
 
 Field catalogs were extracted from a live Odoo 19 instance and version-checked
 against the official [odoo/odoo](https://github.com/odoo/odoo) 18.0/19.0 source.
