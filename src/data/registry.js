@@ -28,6 +28,9 @@ import stockQuant from './stockQuant.js'
 import mrpBom from './mrpBom.js'
 import mrpWorkcenter from './mrpWorkcenter.js'
 import mrpProduction from './mrpProduction.js'
+import hrLeaveType from './hrLeaveType.js'
+import hrLeaveAllocation from './hrLeaveAllocation.js'
+import hrLeave from './hrLeave.js'
 
 export const ODOO_VERSIONS = ['18', '19']
 export const DEFAULT_VERSION = '19'
@@ -81,6 +84,13 @@ export const MODULES = [
     icon: 'factory',
     description: 'Production: bills of materials, work centers and manufacturing orders.',
     models: [mrpBom, mrpWorkcenter, mrpProduction],
+  },
+  {
+    id: 'timeoff',
+    name: 'Time Off',
+    icon: 'calendar',
+    description: 'Leave management: time off types, allocations and time off requests.',
+    models: [hrLeaveType, hrLeaveAllocation, hrLeave],
   },
 ]
 
