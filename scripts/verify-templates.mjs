@@ -141,6 +141,28 @@ for (const mod of MODULES) {
         check(!headers.includes('state'), 'MO excludes read-only state')
         check(!headers.includes('name'), 'MO excludes auto-numbered name')
       }
+      if (model.id === 'hr.leave.type') {
+        check(
+          headers.includes('show_on_dashboard') === (version === '18') &&
+            headers.includes('hide_on_dashboard') === (version === '19'),
+          `type dashboard field matches version (v${version})`
+        )
+        const ra = fields.find((f) => f.name === 'requires_allocation')
+        check(
+          ra.type === (version === '18' ? 'selection' : 'boolean'),
+          `requires_allocation type matches version (v${version})`
+        )
+        check(headers.filter((h) => h === 'requires_allocation').length === 1, 'one requires_allocation column')
+        check(headers.filter((h) => h === 'employee_requests').length === 1, 'one employee_requests column')
+      }
+      if (model.id === 'hr.leave.allocation') {
+        check(!headers.includes('state'), 'allocation excludes read-only state')
+        check(!headers.includes('allocation_type'), 'allocation excludes read-only allocation_type')
+      }
+      if (model.id === 'hr.leave') {
+        check(!headers.includes('state'), 'leave excludes read-only state')
+        check(headers.includes('request_date_from') && !headers.includes('date_from'), 'leave uses request_date_from')
+      }
       if (model.id === 'res.partner.bank') {
         check(
           headers.includes('clearing_number') === (version === '19'),

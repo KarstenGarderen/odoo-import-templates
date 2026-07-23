@@ -180,6 +180,24 @@ const PATHS = {
       <path d="M7 20.5v-3M11 20.5v-3M15.5 20.5v-3" />
     </>
   ),
+  calendar: (
+    <>
+      <rect x="3.5" y="5" width="17" height="15.5" rx="1.8" />
+      <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+    </>
+  ),
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 3v2.5M12 18.5V21M4.2 4.2l1.8 1.8M18 18l1.8 1.8M3 12h2.5M18.5 12H21M4.2 19.8l1.8-1.8M18 6l1.8-1.8" />
+    </>
+  ),
+  wallet: (
+    <>
+      <rect x="3.5" y="6" width="17" height="13" rx="2" />
+      <path d="M3.5 9.5h17M16 13.5h1.5" />
+    </>
+  ),
   logo: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="3" />

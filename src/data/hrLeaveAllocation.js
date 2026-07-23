@@ -1,0 +1,101 @@
+// Field catalog for hr.leave.allocation (Allocations). Version-verified against
+// odoo/odoo 18.0/19.0 source. `state` and `allocation_type` are read-only and
+// excluded — allocations import as "To Approve" and are validated in Odoo.
+
+export default {
+  id: 'hr.leave.allocation',
+  slug: 'time-off-allocations',
+  name: 'Allocations',
+  icon: 'wallet',
+  description: 'Time off granted to employees (e.g. 25 days of PTO). Requires the Time Off app.',
+  orderHint: 'Import after Time Off Types and Employees',
+  groups: ['Basic information', 'Validity'],
+  fields: [
+    {
+      name: 'holiday_status_id',
+      label: 'Time Off Type',
+      type: 'many2one',
+      relation: 'hr.leave.type',
+      required: true,
+      group: 'Basic information',
+      example: 'Paid Time Off',
+      importNote: 'Exact time off type name — import types first.',
+      defaultChecked: true,
+    },
+    {
+      name: 'employee_id',
+      label: 'Employee',
+      type: 'many2one',
+      relation: 'hr.employee',
+      required: true,
+      group: 'Basic information',
+      example: 'Anna Jansen',
+      importNote:
+        'Exact employee name — import employees first. Use employee_id/id with external IDs when names are not unique.',
+      defaultChecked: true,
+    },
+    {
+      name: 'number_of_days',
+      label: 'Allocated Days',
+      type: 'float',
+      group: 'Basic information',
+      help: 'Number of days granted (use hours if the type is hour-based).',
+      example: 25,
+      defaultChecked: true,
+    },
+    {
+      name: 'name',
+      label: 'Description',
+      type: 'char',
+      group: 'Basic information',
+      example: '2026 PTO allocation',
+      importNote: 'Delete the column to let Odoo generate the description.',
+    },
+    {
+      name: 'notes',
+      label: 'Reasons',
+      type: 'text',
+      group: 'Basic information',
+      example: 'Annual statutory leave.',
+    },
+    {
+      name: 'department_id',
+      label: 'Department',
+      type: 'many2one',
+      relation: 'hr.department',
+      group: 'Basic information',
+      example: 'Sales',
+      importNote: 'Exact department name. Delete the column to use the employee’s department.',
+    },
+
+    // Validity
+    {
+      name: 'date_from',
+      label: 'Start Date',
+      type: 'char',
+      group: 'Validity',
+      help: 'The allocation is valid from this date.',
+      example: '2026-01-01',
+      importNote: 'Format YYYY-MM-DD.',
+      defaultChecked: true,
+    },
+    {
+      name: 'date_to',
+      label: 'End Date',
+      type: 'char',
+      group: 'Validity',
+      help: 'Optional expiry of the allocation.',
+      example: '2026-12-31',
+      importNote: 'Format YYYY-MM-DD. Delete the column for an allocation that never expires.',
+    },
+    {
+      name: 'accrual_plan_id',
+      label: 'Accrual Plan',
+      type: 'many2one',
+      relation: 'hr.leave.accrual.plan',
+      group: 'Validity',
+      example: 'Standard 25 days/year',
+      importNote: 'Exact accrual plan name. Only for accrual-based allocations.',
+    },
+  ],
+}
